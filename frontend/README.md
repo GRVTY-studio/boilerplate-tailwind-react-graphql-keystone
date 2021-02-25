@@ -68,3 +68,58 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `yarn build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+<br>
+
+-----
+
+<br>
+<br>
+
+
+## Dependencies
+
+### web-vitals
+
+* https://web.dev/vitals/
+* https://github.com/GoogleChrome/web-vitals
+
+Overview
+* Web Vitals is an initiative by Google to provide unified guidance for quality signals that are essential to delivering a great user experience on the web.
+* Google has provided a number of tools over the years to measure and report on performance. Some developers are experts at using these tools, while others have found the abundance of both tools and metrics challenging to keep up with.
+    * Core Web Vitals are the subset of Web Vitals that apply to all web pages, should be measured by all site owners, and will be surfaced across all Google tools. Each of the Core Web Vitals represents a distinct facet of the user experience, is measurable in the field, and reflects the real-world experience of a critical user-centric outcome.
+    * The metrics that make up Core Web Vitals will evolve over time.
+    * The current set for 2020 focuses on three aspects of the user experience—loading, interactivity, and visual stability—and includes the following metrics (and their respective thresholds)
+
+<br>
+
+-----
+
+<br>
+
+
+### craco
+
+* https://github.com/gsoft-inc/craco/blob/master/packages/craco
+
+
+<br>
+
+-----
+
+<br>
+
+
+### react storybook
+
+* https://storybook.js.org
+* *_Build bulletproof UI components faster_*
+* Storybook is an open source tool for developing UI components in isolation for React, Vue, Angular, and more.
+* It makes building stunning UIs organized and efficient.
+
+
+> “Storybook is a powerful frontend workshop environment tool that allows teams to design, build, and organize UI components (and even full screens!) without getting tripped up over business logic and plumbing.”
+> Brad Frost
+> Author of Atomic Design
+
