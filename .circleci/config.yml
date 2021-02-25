@@ -1,0 +1,166 @@
+version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@0.1.20
+
+build_image: &build_image
+  docker:
+    - image: circleci/node:12.10.0
+
+attach_workspace: &attach_workspace
+  attach_workspace:
+    at: .
+
+persist_build_to_workspace: &persist_build_to_workspace
+  persist_to_workspace:
+    root: .
+    paths:
+      - node_modules
+      - build
+
+jobs:
+  install:
+    <<: *build_image
+    steps:
+      - checkout
+      - run: |
+          yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: api-{{ checksum "yarn.lock" }}
+      - save_cache:
+          paths:
+            - build
+          key: api-build-{{ checksum "yarn.lock" }}-{{ checksum "./plugins/my-plugin/yarn.lock" }}
+      - <<: *persist_build_to_workspace
+
+  build:
+    <<: *build_image
+    steps:
+      - checkout
+      - <<: *attach_workspace
+      - run: |
+          yarn build
+
+  build-staging:
+    <<: *build_image
+    steps:
+      - checkout
+      - <<: *attach_workspace
+      - run: |
+          yarn build:staging
+      - save_cache:
+          paths:
+            - node_modules
+          key: api-{{ checksum "yarn.lock" }}
+      - save_cache:
+          paths:
+            - build
+          key: api-build-{{ checksum "yarn.lock" }}-{{ checksum "./plugins/my-plugin/yarn.lock" }}
+      - <<: *persist_build_to_workspace
+
+  build-production:
+    <<: *build_image
+    steps:
+      - checkout
+      - <<: *attach_workspace
+      - run: |
+          yarn build:production
+      - save_cache:
+          paths:
+            - node_modules
+          key: api-{{ checksum "yarn.lock" }}
+      - save_cache:
+          paths:
+            - build
+          key: api-build-{{ checksum "yarn.lock" }}-{{ checksum "./plugins/my-plugin/yarn.lock" }}
+      - <<: *persist_build_to_workspace
+
+  deploy-api-staging:
+    <<: *build_image
+    steps:
+      - checkout
+      - <<: *attach_workspace
+      - setup_remote_docker:
+          version: 18.09.3
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y python-dev python-pip
+          sudo pip install setuptools
+          sudo pip install --upgrade cffi
+          sudo pip install awscli --upgrade
+      - run: aws ecr get-login --no-include-email --region us-west-1 >> login-docker.sh
+      - run: chmod +x login-docker.sh
+      - run: ./login-docker.sh
+      - run: |
+          IMAGE_API=$AWS_ECR/api:staging-$VERSION_STAGE_MAJOR.$VERSION_STAGE_MINOR.$CIRCLE_BUILD_NUM
+          LATEST_IMAGE_API=$AWS_ECR/api:staging-latest
+          docker build --build-arg SM_REGION=$AWS_DEFAULT_REGION --build-arg SM_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --build-arg SM_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg SM_SECRET_NAME=$SM_SECRET_NAME_STAGING -t $IMAGE_API .
+          docker push $IMAGE_API
+          docker tag $IMAGE_API $LATEST_IMAGE_API
+          docker push $LATEST_IMAGE_API
+          aws ecs update-service --cluster api-development --service api-development --force-new-deployment
+      - run: |
+          IMAGE_JOBS=$AWS_ECR/jobs:staging-$VERSION_STAGE_MAJOR.$VERSION_STAGE_MINOR.$CIRCLE_BUILD_NUM
+          LATEST_IMAGE_JOBS=$AWS_ECR/jobs:staging-latest
+          docker build --build-arg SM_REGION=$AWS_DEFAULT_REGION --build-arg SM_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --build-arg SM_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg SM_SECRET_NAME=$SM_SECRET_NAME_STAGING -t $IMAGE_JOBS .
+          docker push $IMAGE_JOBS
+          docker tag $IMAGE_JOBS $LATEST_IMAGE_JOBS
+          docker push $LATEST_IMAGE_JOBS
+          aws ecs update-service --cluster api-development --service api-task-development --force-new-deployment
+
+  deploy-api-production:
+    <<: *build_image
+    steps:
+      - checkout
+      - <<: *attach_workspace
+      - setup_remote_docker:
+          version: 18.09.3
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y python-dev python-pip
+          sudo pip install setuptools
+          sudo pip install --upgrade cffi
+          sudo pip install awscli --upgrade
+      - run: aws ecr get-login --no-include-email --region us-west-1 >> login-docker.sh
+      - run: chmod +x login-docker.sh
+      - run: ./login-docker.sh
+      - run: |
+          IMAGE=$AWS_ECR/api:production-$VERSION_STAGE_MAJOR.$VERSION_STAGE_MINOR.$CIRCLE_BUILD_NUM
+          LATEST_IMAGE=$AWS_ECR/api:latest
+          docker build --build-arg SM_REGION=$AWS_DEFAULT_REGION --build-arg SM_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --build-arg SM_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg SM_SECRET_NAME=$SM_SECRET_NAME_PRODUCTION -t $IMAGE .
+          docker push $IMAGE
+          docker tag $IMAGE $LATEST_IMAGE
+          docker push $LATEST_IMAGE
+          aws ecs update-service --cluster api-production --service api-production --force-new-deployment
+      - run: |
+          IMAGE_JOBS=$AWS_ECR/jobs:production-$VERSION_STAGE_MAJOR.$VERSION_STAGE_MINOR.$CIRCLE_BUILD_NUM
+          LATEST_IMAGE_JOBS=$AWS_ECR/jobs:latest
+          docker build --build-arg SM_REGION=$AWS_DEFAULT_REGION --build-arg SM_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY --build-arg SM_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg SM_SECRET_NAME=$SM_SECRET_NAME_PRODUCTION -t $IMAGE_JOBS .
+          docker push $IMAGE_JOBS
+          docker tag $IMAGE_JOBS $LATEST_IMAGE_JOBS
+          docker push $LATEST_IMAGE_JOBS
+          aws ecs update-service --cluster api-production --service api-task-production --force-new-deployment
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - install:
+          filters:
+            branches:
+              only: master
+      - build:
+          requires:
+            - install
+          filters:
+            branches:
+              only: master
+      - deploy-api-staging:
+          filters:
+            branches:
+              only: staging
+      - deploy-api-production:
+          filters:
+            branches:
+              only: production

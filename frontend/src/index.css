@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css?family=Inter');
+
+@layer components {
+    .btn {
+        @apply px-5 h-10 rounded-3xl border-2 cursor-pointer font-normal;
+    }
+    .btn-primary {
+        @apply btn text-base w-60 h-14 text-green-brand border-green-brand hover:bg-green-brand hover:text-white-pale;
+    }
+    .btn-primary-disabled {
+        @apply btn-primary border-none bg-green-pale text-green-disabled hover:bg-green-pale hover:text-green-disabled cursor-default;
+    }
+    .btn-secondary {
+        @apply btn;
+    }
+}
+
+​​html,
+body,
+#root {
+    height: 100%;
+    width: 100%;
+    font-family: 'Inter';
+}
+
+.arrow-icon g {
+    fill: '#b1bcbf';
+}

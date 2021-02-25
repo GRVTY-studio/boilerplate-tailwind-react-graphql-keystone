@@ -1,0 +1,43 @@
+{
+  "name": "backend",
+  "private": true,
+  "version": "1.0.0",
+  "author": "Gravity Studios",
+  "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development DISABLE_LOGGING=true ENABLE_DEV_FEATURES=false keystone dev",
+    "build": "cross-env NODE_ENV=production keystone build",
+    "start": "cross-env NODE_ENV=production keystone start",
+    "create-tables": "cross-env CREATE_TABLES=true keystone create-tables",
+    "docker-dev": "docker-compose up devbox mongodb devnginx",
+    "docker-prod": "docker-compose up production mongodb nginx",
+    "docker-build": "docker-compose build"
+  },
+  "dependencies": {
+    "@keystonejs/adapter-mongoose": "^11.0.1",
+    "@keystonejs/app-admin-ui": "https://gitpkg.now.sh/gabidobo/keystone/packages/app-admin-ui?rebateus-fixes",
+    "@keystonejs/app-graphql": "^6.2.0",
+    "@keystonejs/auth-passport": "^6.0.1",
+    "@keystonejs/auth-password": "^6.0.1",
+    "@keystonejs/fields": "^22.0.0",
+    "@keystonejs/keystone": "^19.2.0",
+    "@keystonejs/server-side-graphql-client": "^2.0.1",
+    "cross-env": "^7.0.3",
+    "dotenv": "^8.2.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb": "18.2.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "prettier": "^2.2.1"
+  }
+}
