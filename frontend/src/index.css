@@ -1,20 +1,305 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css?family=Inter');
+
+/* Serif-Pro */
+/* Extra light */
+@font-face {
+    font-family: 'inter';
+    src: url(./fonts/inter/Inter-Thin.ttf);
+    font-weight: 100;
+    font-style: normal;
+}
+/* Extra light */
+@font-face {
+    font-family: 'inter';
+    src: url(./fonts/inter/Inter-ExtraLight.ttf);
+    font-weight: 200;
+    font-style: normal;
+}
+/* light */
+@font-face {
+    font-family: 'inter';
+    src: url(./fonts/inter/Inter-Light.ttf);
+    font-weight: 300;
+    font-style: normal;
+}
+/* Regular */
+@font-face {
+    font-family: 'inter';
+    src: url(./fonts/inter/Inter-Regular.ttf);
+    font-weight: 400;
+    font-style: normal;
+}
+/* Medium */
+@font-face {
+    font-family: 'inter';
+    src: url(./fonts/inter/Inter-Medium.ttf);
+    font-weight: 500;
+    font-style: normal;
+}
+/* Semi-bold */
+@font-face {
+    font-family: 'inter';
+    src: url(./fonts/inter/Inter-SemiBold.ttf);
+    font-weight: 600;
+}
+/* Bold */
+@font-face {
+    font-family: 'inter';
+    src: url(./fonts/inter/Inter-Bold.ttf);
+    font-weight: 700;
+}
+/* Extra-Bold */
+@font-face {
+    font-family: 'inter';
+    src: url(./fonts/inter/Inter-ExtraBold.ttf);
+    font-weight: 800;
+}
+/* Extra-Bold */
+@font-face {
+    font-family: 'inter';
+    src: url(./fonts/inter/Inter-Black.ttf);
+    font-weight: 900;
+}
+
+/* Serif-Pro */
+/* Extra light */
+@font-face {
+    font-family: 'serif-pro';
+    src: url(./fonts/serif-pro/SourceSerifPro-ExtraLight.ttf);
+    font-weight: 200;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'serif-pro';
+    src: url(./fonts/serif-pro/SourceSerifPro-ExtraLightItalic.ttf);
+    font-weight: 200;
+    font-style: italic;
+}
+
+/* Light */
+@font-face {
+    font-family: 'serif-pro';
+    src: url(./fonts/serif-pro/SourceSerifPro-LightItalic.ttf);
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'serif-pro';
+    src: url(./fonts/serif-pro/SourceSerifPro-LightItalic.ttf);
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* Regular */
+@font-face {
+    font-family: 'serif-pro';
+    src: url(./fonts/serif-pro/SourceSerifPro-Regular.ttf);
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'serif-pro';
+    src: url(./fonts/serif-pro/SourceSerifPro-Bold.ttf);
+    font-weight: 400;
+}
+
+/* Semibold */
+@font-face {
+    font-family: 'serif-pro';
+    src: url(./fonts/serif-pro/SourceSerifPro-SemiBold.ttf);
+    font-weight: 600;
+}
+@font-face {
+    font-family: 'serif-pro';
+    src: url(./fonts/serif-pro/SourceSerifPro-SemiBoldItalic.ttf);
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Bold */
+@font-face {
+    font-family: 'serif-pro';
+    src: url(./fonts/serif-pro/SourceSerifPro-Bold.ttf);
+    font-weight: 700;
+}
+@font-face {
+    font-family: 'serif-pro';
+    src: url(./fonts/serif-pro/SourceSerifPro-BoldItalic.ttf);
+    font-weight: 700;
+    font-style: italic;
+}
+
+/* Black */
+@font-face {
+    font-family: 'serif-pro';
+    src: url(./fonts/serif-pro/SourceSerifPro-Black.ttf);
+    font-weight: 900;
+}
+
+@layer utilities {
+    .serif-pro {
+        font-family: 'serif-pro';
+    }
+    .inter {
+        font-family: 'Inter';
+    }
+}
 
 @layer components {
+    /* Buttons */
     .btn {
-        @apply px-5 h-10 rounded-3xl border-2 cursor-pointer font-normal;
+        @apply px-5 rounded-full border-2 border-solid cursor-pointer font-normal inter;
     }
-    .btn-primary {
-        @apply btn text-base w-60 h-14 text-green-brand border-green-brand hover:bg-green-brand hover:text-white-pale;
+    .btn.small {
+        @apply w-44 h-12;
     }
-    .btn-primary-disabled {
-        @apply btn-primary border-none bg-green-pale text-green-disabled hover:bg-green-pale hover:text-green-disabled cursor-default;
+    .btn.base {
+        @apply w-60 h-14;
     }
-    .btn-secondary {
-        @apply btn;
+    .btn.fluid {
+        @apply w-full h-14;
+    }
+    .btn.primary {
+        @apply text-base text-green-PROJECT_NAME border-green-PROJECT_NAME hover:bg-green-PROJECT_NAME hover:text-white;
+    }
+    .btn.primary.disabled {
+        @apply border-none bg-green-pale text-green-disabled hover:bg-green-pale hover:text-green-disabled cursor-default;
+    }
+    .btn.secondary {
+        @apply border-blue-gray text-blue-gray hover:bg-blue-gray hover:text-white;
+    }
+    .btn.secondary.disabled {
+        @apply bg-gray-pale border-none text-gray hover:bg-gray-pale hover:text-gray cursor-default;
+    }
+    .btn.tertiary {
+        @apply border-blue-gray text-blue-gray hover:bg-blue-gray hover:text-white;
+    }
+    .btn.tertiary.disabled {
+        @apply bg-gray-pale border-none text-gray hover:bg-gray-pale hover:text-gray cursor-default;
+    }
+    .btn.google {
+        @apply w-full h-14 flex flex-row items-center justify-between bg-white text-blue-google border-blue-google hover:bg-blue-google hover:text-white;
+    }
+
+    /* Special input button */
+    .input-button {
+        @apply w-10 h-10 rounded-r-lg text-gray-light border-l-2 text-3xl flex items-center justify-center text-center absolute right-0 inset-y-0;
+    }
+    .input-button-container .input.error + .input-button {
+        @apply text-red-error border-red-error;
+    }
+    .input-button-container .input:focus:not(.error) + .input-button {
+        @apply bg-green-washed text-white border-green-washed;
+    }
+
+    /* Inputs */
+    label {
+        @apply text-blue-gray text-15 font-normal;
+    }
+    .input {
+        @apply w-full px-3 h-10 rounded-lg border-2;
+    }
+    .input.currency {
+        @apply text-right;
+    }
+    .input.error {
+        @apply border-red-error placeholder-blue-gray-medium text-gray-dark text-base focus:border-red-error;
+    }
+    .input.primary:not(.error) {
+        @apply border-gray-light placeholder-blue-gray-medium text-gray-dark text-base focus:border-green-washed;
+    }
+    .input.small {
+        @apply w-2/5;
+    }
+
+    .input.input-icon-container {
+        @apply flex flex-row items-center justify-between;
+    }
+    .input.input-icon-container input {
+        @apply border-none outline-none;
+    }
+    .input.input-icon-container:focus-within:not(.error) {
+        @apply border-green-washed;
+    }
+
+    /* Radio buttons */
+    .radio-button {
+        @apply grid grid-flow-col gap-2 items-center justify-start cursor-pointer;
+    }
+    .radio-button input {
+        @apply opacity-0 w-0 h-0;
+    }
+    .radio-button .radio-control {
+        @apply rounded-full w-5 h-5 border-2 border-blue-gray-medium flex text-center items-center justify-center;
+    }
+    .radio-button input:checked + .radio-control {
+        @apply border-green-PROJECT_NAME;
+    }
+    .radio-button input:checked + .radio-control span {
+        @apply rounded-full w-3 h-3 bg-green-PROJECT_NAME opacity-100;
+    }
+    .radio-button .radio-control span {
+        @apply rounded-full w-3 h-3 bg-green-PROJECT_NAME opacity-0;
+    }
+
+    /* Typography */
+    h1 {
+        @apply font-bold serif-pro text-xl xl:text-3xl;
+    }
+    h2 {
+        @apply text-gray-dark font-semibold text-base capitalize;
+    }
+    h3 {
+        @apply text-blue-gray font-semibold text-base capitalize;
+    }
+    p {
+        @apply text-gray-dark font-normal text-15;
+    }
+
+    /* Containers */
+    .round-card-container {
+        @apply w-full rounded-3xl shadow p-16;
+    }
+    .modal-container {
+        @apply w-full h-full py-20 px-20 flex flex-col items-center justify-center z-10;
+    }
+    .container-grayed-out {
+        @apply w-full h-32 bg-gray-pale rounded-xl flex items-center justify-center text-blue-gray italic text-lg;
+    }
+    .container-white {
+        @apply flex flex-row w-full h-36 shadow rounded-3xl items-center p-16 serif-pro font-semibold text-2xl justify-between;
+    }
+    .container-white.disabled {
+        @apply text-blue-gray-medium;
+    }
+
+    /* Misc */
+    .divider-gray-light {
+        @apply border-b-2 border-gray-light-outline w-full my-5;
+    }
+    .link-green {
+        @apply text-green-PROJECT_NAME font-bold text-base hover:text-green-washed;
+    }
+    .nav-item {
+        @apply text-blue-gray hover:text-blue-gray-medium font-semibold;
+    }
+    .nav-item-current {
+        @apply text-gray-dark hover:text-gray-dark font-semibold;
+    }
+    .modal-content {
+        @apply w-full h-full p-10 flex flex-col items-center justify-start;
+    }
+    .tooltip-container {
+        @apply relative;
+    }
+
+    .tooltip-content {
+        @apply absolute w-80 rounded-xl shadow p-5 bg-white -left-40 top-5 z-10 invisible text-sm inter;
+    }
+    .tooltip-container:hover .tooltip-content {
+        @apply visible;
     }
 }
 
@@ -28,4 +313,66 @@ body,
 
 .arrow-icon g {
     fill: '#b1bcbf';
+}
+
+::-webkit-input-placeholder {
+    font-style: italic;
+}
+:-moz-placeholder {
+    font-style: italic;
+}
+::-moz-placeholder {
+    font-style: italic;
+}
+:-ms-input-placeholder {
+    font-style: italic;
+}
+
+input {
+    caret-color: '#8EC665';
+}
+
+.folded-corner-bottom {
+    width: 0;
+    height: 0;
+    border-left: 30px solid;
+    border-bottom-left-radius: 12px;
+    border-right: 30px solid transparent;
+    border-top: 30px solid transparent;
+    position: absolute;
+    right: -30px;
+}
+.folded-corner-bottom.green {
+    border-left-color: #aad48b;
+}
+.folded-corner-bottom.blue {
+    border-left-color: #a1bec4;
+}
+
+.folded-corner-top {
+    width: 0;
+    height: 0;
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-top: 30px solid #ffffff;
+    position: absolute;
+    right: -30px;
+}
+
+li:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+button {
+    outline: none !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.list-div {
+    display: list-item;
 }

@@ -1,16 +1,45 @@
 import React from 'react';
-import Button from '../components/common/Button';
+import Button, { GoogleButton } from '../components/common/Button';
 
 export default {
-    title: 'Button',
+    title: 'Buttons',
     component: Button,
+    argTypes: {
+        submit: {
+            table: {
+                disable: true,
+            },
+        },
+        onClick: {
+            table: {
+                disable: true,
+            },
+        },
+    },
 };
 
-const Template = (args) => <Button {...args} />;
+const MainTemplate = (args) => <Button {...args} />;
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const Main = MainTemplate.bind({});
+Main.args = {
     content: 'Button',
     primary: true,
+    secondary: false,
     disabled: false,
+    arrow: true,
+    small: false,
+};
+
+const GoogleTemplate = ({ content }) => (
+    <div className="grid gap-5 w-full h-full p-5">
+        <GoogleButton />
+        <div className="w-full grid grid-flow-col gap-5">
+            <GoogleButton content={content} />
+            <GoogleButton content={content} />
+        </div>
+    </div>
+);
+export const Google = GoogleTemplate.bind({});
+Google.args = {
+    content: 'Sign Up',
 };
