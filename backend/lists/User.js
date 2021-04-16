@@ -34,26 +34,6 @@ module.exports = {
             type: Text,
             access: () => false,
         },
-        company: {
-            type: Relationship,
-            ref: 'Company.user',
-            many: false,
-        },
-        integrations: {
-            type: Relationship,
-            ref: 'Integration.user',
-            many: true,
-        },
-        quotes: {
-            type: Relationship,
-            ref: 'Quote.user',
-            many: true,
-        },
-        employees: {
-            type: Relationship,
-            ref: 'Employee.user',
-            many: true,
-        },
     },
     access: {
         read: isAdminOrUser,

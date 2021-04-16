@@ -93,8 +93,8 @@ resource "aws_ecs_task_definition" "app" {
         "value": "${local.env_vars["GOOGLE_OAUTH_CLIENT_SECRET"]}"
       },
       {
-        "name": "SENDGRID_API_KEY",
-        "value": "${local.env_vars["SENDGRID_API_KEY"]}"
+        "name": "SES_API_KEY",
+        "value": "${local.env_vars["SES_API_KEY"]}"
       },
       {
         "name": "REDIS_URL",
