@@ -61,7 +61,7 @@ jobs:
       - run: |
           sudo apt-get update
       - run: npm install
-      - run: REACT_APP_GOOGLE_AUTH=$DEV_REACT_APP_GOOGLE_AUTH REACT_APP_API_URL=$DEV_REACT_APP_API_URL REACT_APP_GTM_ID=$DEV_REACT_APP_GTM_ID REACT_APP_SENTRY_DSN=$DEV_REACT_APP_SENTRY_DSN REACT_APP_FINCH_CLIENT_ID=$DEV_REACT_APP_FINCH_CLIENT_ID npm run build
+      - run: REACT_APP_GOOGLE_AUTH=$DEV_REACT_APP_GOOGLE_AUTH REACT_APP_API_URL=$DEV_REACT_APP_API_URL REACT_APP_GTM_ID=$DEV_REACT_APP_GTM_ID REACT_APP_SENTRY_DSN=$DEV_REACT_APP_SENTRY_DSN npm run build
       - run: |
           sudo apt-get install -y python-dev python-pip
           sudo pip install setuptools
@@ -114,7 +114,7 @@ jobs:
       - run: |
           sudo apt-get update
       - run: npm install
-      - run: REACT_APP_GOOGLE_AUTH=$STAGING_REACT_APP_GOOGLE_AUTH REACT_APP_API_URL=$STAGING_REACT_APP_API_URL REACT_APP_GTM_ID=$STAGING_REACT_APP_GTM_ID REACT_APP_SENTRY_DSN=$STAGING_REACT_APP_SENTRY_DSN REACT_APP_FINCH_CLIENT_ID=$STAGING_REACT_APP_FINCH_CLIENT_ID npm run build
+      - run: REACT_APP_GOOGLE_AUTH=$STAGING_REACT_APP_GOOGLE_AUTH REACT_APP_API_URL=$STAGING_REACT_APP_API_URL REACT_APP_GTM_ID=$STAGING_REACT_APP_GTM_ID REACT_APP_SENTRY_DSN=$STAGING_REACT_APP_SENTRY_DSN npm run build
       - run: |
           sudo apt-get install -y python-dev python-pip
           sudo pip install setuptools
@@ -167,7 +167,7 @@ jobs:
       - run: |
           sudo apt-get update
       - run: npm install
-      - run: REACT_APP_GOOGLE_AUTH=$PROD_REACT_APP_GOOGLE_AUTH REACT_APP_API_URL=$PROD_REACT_APP_API_URL REACT_APP_GTM_ID=$PROD_REACT_APP_GTM_ID REACT_APP_SENTRY_DSN=$PROD_REACT_APP_SENTRY_DSN REACT_APP_FINCH_CLIENT_ID=$PROD_REACT_APP_FINCH_CLIENT_ID npm run build
+      - run: REACT_APP_GOOGLE_AUTH=$PROD_REACT_APP_GOOGLE_AUTH REACT_APP_API_URL=$PROD_REACT_APP_API_URL REACT_APP_GTM_ID=$PROD_REACT_APP_GTM_ID REACT_APP_SENTRY_DSN=$PROD_REACT_APP_SENTRY_DSN npm run build
       - run: |
           sudo apt-get install -y python-dev python-pip
           sudo pip install setuptools

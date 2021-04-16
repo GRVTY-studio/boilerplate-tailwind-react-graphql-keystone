@@ -93,14 +93,6 @@ resource "aws_ecs_task_definition" "app" {
         "value": "${local.env_vars["GOOGLE_OAUTH_CLIENT_SECRET"]}"
       },
       {
-        "name": "FINCH_CLIENT_ID",
-        "value": "${local.env_vars["FINCH_CLIENT_ID"]}"
-      },
-      {
-        "name": "FINCH_CLIENT_SECRET",
-        "value": "${local.env_vars["FINCH_CLIENT_SECRET"]}"
-      },
-      {
         "name": "SENDGRID_API_KEY",
         "value": "${local.env_vars["SENDGRID_API_KEY"]}"
       },

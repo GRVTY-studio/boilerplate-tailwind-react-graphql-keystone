@@ -1,5 +1,4 @@
 const Queue = require('bee-queue');
-const finchImport = require('./finchImportTask');
 const getLogger = require('../helpers/logger');
 
 const queueLogger = getLogger('Queue');
@@ -19,10 +18,6 @@ module.exports = {
 
             const { type } = job.data;
             const logger = getLogger(`job-${job.id}`);
-
-            if (type === 'finch-import') {
-                return finchImport(job.data, keystone, logger, done);
-            }
 
             return done(null, false);
         });

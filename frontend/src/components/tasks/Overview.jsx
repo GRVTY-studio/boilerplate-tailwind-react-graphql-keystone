@@ -22,7 +22,6 @@ import {
     profileNavItems,
     quotePropShape,
 } from '../../tools/utilities/transforms';
-import FinchConnect from '../common/FinchConnect';
 import Button from '../common/Button';
 import { updateProjectsThunk } from '../../tools/redux/thunks/quoteThunks';
 import YearlyIncomeSummaryTable from './YearlyIncomeSummaryTable';
