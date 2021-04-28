@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { ReactComponent as PROJECT_NAMELogo } from '../../img/svg/PROJECT_NAME-logo-navbar.svg';
 import { ReactComponent as ProfileIcon } from '../../img/svg/profile-icon.svg';
 import { navItems } from '../../tools/utilities/transforms';
 
 const Navbar = ({ tasks = 0, additionalMessage, current, setCurrent }) => (
     <div className="bg-white fixed top-0 w-full h-20 flex flex-row items-center justify-center shadow z-10">
-        <NavLink to="/overview/dashboard" className="absolute left-10">
-            <PROJECT_NAMELogo />
-        </NavLink>
+        <NavLink to="/overview/dashboard" className="absolute left-10" />
         <div
             className="w-full flex flex-row items-center justify-center"
             style={{ maxWidth: '1440px' }}

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { matchPropShape, pageTitles } from '../tools/utilities/transforms';
-import { ReactComponent as PROJECT_NAMELogo } from '../img/svg/PROJECT_NAME-logo-large.svg';
 
 const UnAuthenticatedLayout = ({ children, match }) => {
     const { path } = match || {};
@@ -11,7 +10,6 @@ const UnAuthenticatedLayout = ({ children, match }) => {
         <div className="w-full h-screen grid xl:flex xl:flex-col items-center justify-center">
             <div className="w-full flex flex-row items-center justify-between xl:fixed xl:top-0 xl:h-20 px-10">
                 <h1>{pageTitles[path]}</h1>
-                <PROJECT_NAMELogo className="w-20 h-20 xl:w-32 xl:h-6 " />
             </div>
             <div
                 className="w-full flex flex-col items-center justify-center"

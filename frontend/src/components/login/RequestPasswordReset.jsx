@@ -7,7 +7,6 @@ import Input from '../common/Input';
 import { validationMessages } from '../../tools/utilities/transforms';
 import { emailRegex } from '../../tools/utilities/regex';
 import Modal from '../common/Modal';
-import { ReactComponent as PROJECT_NAMELogo } from '../../img/svg/PROJECT_NAME-logo-navbar.svg';
 import { requestPasswordResetThunk } from '../../tools/redux/thunks/authThunks';
 
 const RequestPasswordReset = () => {
@@ -28,7 +27,6 @@ const RequestPasswordReset = () => {
         return (
             <Modal>
                 <div className="modal-container">
-                    <PROJECT_NAMELogo />
                     <h2 className="my-10">Reset link sent to your email</h2>
 
                     <Button

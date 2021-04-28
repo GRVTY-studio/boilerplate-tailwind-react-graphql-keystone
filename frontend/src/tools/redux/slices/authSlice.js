@@ -17,10 +17,6 @@ import {
     signUpThunk,
     updateUserThunk,
 } from '../thunks/authThunks';
-import { addCompanyThunk } from '../thunks/companyThunks';
-import { bulkUpdateYearlyIncomeThunk } from '../thunks/employeeThunks';
-import { addIntegrationThunk } from '../thunks/integrationThunks';
-import { addQuoteThunk, updateProjectsThunk } from '../thunks/quoteThunks';
 
 const authFulfilled = (state, action, delayLoadCompletion) => {
     state.isAuthenticated = true;
@@ -96,26 +92,6 @@ export const slice = createSlice({
         builder.addCase(updateUserThunk.fulfilled, (state, action) => {
             state.user = action?.payload?.user;
             state.creating = loadingTransform.idle;
-        });
-
-        builder.addCase(addCompanyThunk.fulfilled, (state) => {
-            state.hasCompany = true;
-        });
-
-        builder.addCase(addIntegrationThunk.fulfilled, (state) => {
-            state.hasAddedIntegration = true;
-        });
-        builder.addCase(addQuoteThunk.fulfilled, (state, action) => {
-            const [{ projects } = {}] = action.payload.quotes;
-            state.hasQuote = true;
-            state.hasProjects = !!projects && projects !== '';
-        });
-        builder.addCase(updateProjectsThunk.fulfilled, (state, action) => {
-            const [{ projects } = {}] = action.payload.quotes;
-            state.hasProjects = !!projects && projects !== '';
-        });
-        builder.addCase(bulkUpdateYearlyIncomeThunk.fulfilled, (state) => {
-            state.hasMarkedRNDActivity = true;
         });
 
         builder.addCase(

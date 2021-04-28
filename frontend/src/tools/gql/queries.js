@@ -10,3 +10,14 @@ export const GET_USER = gql`
         }
     }
 `;
+
+export const GET_USER_CONFIG = gql`
+    query GetUserConfig {
+        authenticatedUser {
+            id
+            email
+            firstName
+            lastName
+        }
+    }
+`;
