@@ -8,49 +8,26 @@ import {
 } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import AuthenticatedLayout from './layouts/AuthenticatedLayout';
-import CenterLayout from './layouts/CenterLayout';
 import Overview from './components/tasks/Overview';
-import Integrations from './components/integrations/Integrations';
 import Profile from './components/profile/Profile';
 import Login from './components/login/Login';
 import CreateAccount from './components/signUp/CreateAccount';
 import UnAuthenticatedLayout from './layouts/UnAuthenticatedLayout';
-import InitialQuote from './components/tasks/InitialQuote';
-import RequestInitialQuote from './components/signUp/RequestInitialQuote';
-import EditEstimate from './components/tasks/EditEstimate';
-import MarkRDActivity from './components/tasks/MarkRDActivity';
 import LoadingModal from './components/common/LoadingModal';
 import RequestPasswordReset from './components/login/RequestPasswordReset';
 import {
-    selectHasAddedIntegration,
-    selectHasMarkedRNDActivity,
-    selectHasProjects,
-    selectHasQuote,
     selectIsAuthenticated,
     selectUser,
-    selectHasCompany,
 } from './tools/redux/selectors/authSelectors';
 import { selectLoading } from './tools/redux/selectors/commonSelectors';
-import {
-    loadingTransform,
-    sliceTransform,
-    tasks,
-} from './tools/utilities/transforms';
+import { loadingTransform, sliceTransform } from './tools/utilities/transforms';
 import {
     getUserConfigThunk,
     logoutThunk,
 } from './tools/redux/thunks/authThunks';
-import { selectLatestQuote } from './tools/redux/selectors/quoteSelectors';
-import { selectCompany } from './tools/redux/selectors/companySelectors';
-import {
-    selectAllIntegrations,
-    selectShowTaskCompleted,
-} from './tools/redux/selectors/integrationSelectors';
-import { getIndustriesThunk } from './tools/redux/thunks/companyThunks';
+
 import LoadingComponent from './components/common/LoadingComponent';
-import EditProjects from './components/tasks/EditProjects';
 import GoogleAuth from './components/signUp/GoogleAuth';
-import TaskConfirmationModal from './components/common/TaskConfirmationModal';
 import PasswordReset from './components/signUp/PasswordReset';
 
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -59,18 +36,7 @@ function App() {
     const dispatch = useDispatch();
     // Entities
     const isAuthenticated = useSelector(selectIsAuthenticated);
-
-    const hasCompany = useSelector(selectHasCompany);
-    const hasQuote = useSelector(selectHasQuote);
-    const hasProjects = useSelector(selectHasProjects);
-    const hasAddedIntegration = useSelector(selectHasAddedIntegration);
-    const hasMarkedRNDActivity = useSelector(selectHasMarkedRNDActivity);
-    const showIntegrationTaskCompleted = useSelector(selectShowTaskCompleted);
-
     const user = useSelector(selectUser);
-    const quote = useSelector(selectLatestQuote);
-    const company = useSelector(selectCompany);
-    const integrations = useSelector(selectAllIntegrations);
 
     // Loading selectors
     const loadingAuth = useSelector((state) =>
@@ -86,9 +52,6 @@ function App() {
     useEffect(() => {
         if (loadingAuth === loadingTransform.initial && !user) {
             dispatch(getUserConfigThunk());
-        }
-        if (isAuthenticated) {
-            dispatch(getIndustriesThunk());
         }
     }, [loadingAuth, dispatch, user, isAuthenticated]);
 
@@ -131,7 +94,6 @@ function App() {
             />
             <LoadingComponent />
             <Router>
-                <TaskConfirmationModal quote={quote} company={company} />
                 <Switch>
                     <Route
                         path={[
@@ -140,127 +102,27 @@ function App() {
                             '/dashboard',
                         ]}
                     >
-                        <AuthenticatedLayout
-                            lastQuote={quote}
-                            hasQuote={hasQuote}
-                            hasAddedIntegration={hasAddedIntegration}
-                            hasMarkedRNDActivity={hasMarkedRNDActivity}
-                        >
+                        <AuthenticatedLayout>
                             <Switch>
                                 {!isAuthenticated && <Redirect to="/login" />}
                                 <Route
                                     path={['/dashboard/overview']}
                                     render={() => (
-                                        <Overview
-                                            company={company}
-                                            quote={quote}
-                                            userId={user?.id}
-                                            integrations={integrations}
-                                            hasCompany={hasCompany}
-                                            hasQuote={hasQuote}
-                                            hasProjects={hasProjects}
-                                            hasAddedIntegration={
-                                                hasAddedIntegration
-                                            }
-                                            hasMarkedRNDActivity={
-                                                hasMarkedRNDActivity
-                                            }
-                                            showIntegrationTaskCompleted={
-                                                showIntegrationTaskCompleted
-                                                    ? tasks
-                                                          .connectaccountingsoftware
-                                                          .key
-                                                    : undefined
-                                            }
-                                        />
+                                        <Overview userId={user?.id} />
                                     )}
-                                />
-                                <Route
-                                    exact
-                                    render={() => (
-                                        <EditProjects quote={quote} />
-                                    )}
-                                    path="/dashboard/task/projects"
-                                />
-                                <Route
-                                    exact
-                                    render={() => (
-                                        <Integrations
-                                            integrations={integrations}
-                                            userId={user?.id}
-                                        />
-                                    )}
-                                    path="/dashboard/integrations"
                                 />
                                 <Route
                                     path="/dashboard/profile"
                                     render={() => (
-                                        <Profile
-                                            company={company}
-                                            user={user}
-                                            logOut={logOut}
-                                        />
+                                        <Profile user={user} logOut={logOut} />
                                     )}
                                 />
-                                <Route
-                                    path="/dashboard/task/editestimate"
-                                    render={() => (
-                                        <EditEstimate quote={quote} />
-                                    )}
-                                />
-                                <Route
-                                    exact
-                                    render={() => (
-                                        <MarkRDActivity
-                                            projects={quote?.projects?.split(
-                                                ',',
-                                            )}
-                                        />
-                                    )}
-                                    path="/dashboard/task/markrdactivity"
-                                />
-                                {!quote && (
-                                    <Route
-                                        path="/dashboard/task/getinitialquote"
-                                        render={() => (
-                                            <InitialQuote
-                                                userId={user?.id}
-                                                company={company}
-                                                quote={quote}
-                                                isSignUp={false}
-                                            />
-                                        )}
-                                    />
-                                )}
                                 <Redirect
                                     from="/dashboard"
                                     to="/dashboard/overview"
                                 />
                             </Switch>
                         </AuthenticatedLayout>
-                    </Route>
-                    <Route path={['/getinitialquote', '/requestquote']}>
-                        <CenterLayout>
-                            <Switch>
-                                <Route
-                                    exact
-                                    render={() => (
-                                        <InitialQuote
-                                            userId={user?.id}
-                                            company={company}
-                                            quote={quote}
-                                            isSignUp
-                                        />
-                                    )}
-                                    path="/getinitialquote"
-                                />
-                                <Route
-                                    exact
-                                    render={() => <RequestInitialQuote />}
-                                    path="/requestquote"
-                                />
-                            </Switch>
-                        </CenterLayout>
                     </Route>
                     <Route
                         path={[
@@ -288,11 +150,8 @@ function App() {
                                         render={() => <PasswordReset />}
                                         path="/passwordreset"
                                     />
-                                    {isAuthenticated && hasQuote && (
-                                        <Redirect to="/dashboard" />
-                                    )}
                                     {isAuthenticated && (
-                                        <Redirect to="/requestquote" />
+                                        <Redirect to="/dashboard" />
                                     )}
                                     <Route
                                         exact

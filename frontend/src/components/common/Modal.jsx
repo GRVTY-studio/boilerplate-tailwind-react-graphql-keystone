@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ReactComponent as SpiralImage } from '../../img/svg/colour-spiral.svg';
 import { ReactComponent as CrossIcon } from '../../img/svg/cross-icon.svg';
 import Button from './Button';
 
@@ -12,7 +11,6 @@ export const WelcomeModal = ({ name, year }) => (
         >
             <CrossIcon className="absolute z-20 top-5 right-5 cursor-pointer" />
             <div className="flex flex-row w-full h-full">
-                <SpiralImage className="h-full w-1/3" />
                 <div className="flex flex-col items-start justify-center w-2/3 p-10">
                     <h1>Welcome, {name}</h1>
                     <span className="inter font-normal text-xl my-10">

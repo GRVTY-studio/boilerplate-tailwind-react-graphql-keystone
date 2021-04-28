@@ -10,18 +10,22 @@ import reportWebVitals from './reportWebVitals';
 import store from './tools/redux/store';
 import SomethingWentWrong from './components/common/SomethingWentWrong';
 
-Sentry.init({
-    dsn: process.env.REACT_APP_SENTRY_DSN,
-    integrations: [new Integrations.BrowserTracing()],
-    release: `${'my-project-name@'} + ${process.env.npm_package_version}`,
-    tracesSampleRate: 0.5,
-});
+if (process.env.REACT_APP_SENTRY_DSN) {
+    Sentry.init({
+        dsn: process.env.REACT_APP_SENTRY_DSN,
+        integrations: [new Integrations.BrowserTracing()],
+        release: `${'my-project-name@'} + ${process.env.npm_package_version}`,
+        tracesSampleRate: 0.5,
+    });
+}
 
-const tagManagerArgs = {
-    gtmId: process.env.REACT_APP_GTM_ID || 'G-LTCP5LKNSZ',
-};
+if (process.env.REACT_APP_GTM_ID) {
+    const tagManagerArgs = {
+        gtmId: process.env.REACT_APP_GTM_ID,
+    };
 
-TagManager.initialize(tagManagerArgs);
+    TagManager.initialize(tagManagerArgs);
+}
 
 ReactDOM.render(
     <React.StrictMode>
